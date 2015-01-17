@@ -215,7 +215,7 @@ NOTE：先备份_config.yml 文件后再升级
 1. 网上大多数教程都将其说的极其简单：“直接在根目录下创建自己的 404.html 就可以”。但我却在这儿废了不少时间，究其原因是大家觉得太简单而说的不够明白。“根目录下”指的不是Hexo目录下，而是Hexo/source目录下。
 
 2. 404.html的内容可以设置为下面的内容[hexo添加404页面][6]（NOTE： _config.yml中的permalink_defaults属性不需要修改）。
-<pre><code>
+``` html
 ---
 layout: default
 ---
@@ -228,12 +228,11 @@ layout: default
          <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>
     </body>
 </html>
-</code></pre>
+```
 也可以简化为这一行：
 ``` html
 <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>
 ```
-
 4.4 安装插件
 
 4.4.1 sitemap插件
@@ -241,11 +240,12 @@ layout: default
 1. 可以将你站点地图提交给搜索引擎，文件路径\sitemap.xml。
 
 2. 安装
-
+``` bash
 $ npm install hexo-generator-sitemap
+```
 3. 启用，修改Hexo\_config.yml，增加以下内容
 
-复制代码
+``` yml
 # Extensions
 Plugins:
 - hexo-generator-sitemap
@@ -253,7 +253,7 @@ Plugins:
 #sitemap
 sitemap:
   path: sitemap.xml
-复制代码
+```
 4. 使用方法
 
 （1）访问 http://localhost:4000/sitemap.xml，即可看到站点地图。
@@ -261,13 +261,13 @@ sitemap:
 （2）那么怎么将它显示在页面中呢[如何搭建一个独立博客——简明Github Pages与Hexo教程][7]？
 
 可以修改themes/pacman（也就是你正在使用的那个theme）下的 _config.yml，在 menu 节点下添加下面的内容（下面要介绍的RSS插件也同样）
-
+``` yml
 menu:
   Home: /
   Archives: /archives
   Rss: /atom.xml
   Sitemap: /sitemap.xml
-
+```
 
 5. 如何向google提交sitemap
 
@@ -276,21 +276,24 @@ Sitemap 可方便管理员通知搜索引擎他们网站上有哪些可供抓取
 如何向google提交sitemap，请参考[如何向google提交sitemap（详细）][8]。
 
 6. 升级插件
-
+``` bash
 $ npm update
+```
 7. 卸载插件
-
+``` bash
 $ npm uninstall hexo-generator-sitemap
+```
 4.4.2 feed插件
 
 1. RSS的生成插件，你可以在配置显示你站点的RSS，文件路径\atom.xml。
 
 2. 安装
-
+``` bash
 $ npm install hexo-generator-feed
+```
 3. 启用，修改Hexo\_config.yml，增加以下内容
 
-复制代码
+``` yml
 # Extensions
 Plugins:
 - hexo-generator-feed
@@ -301,7 +304,7 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
-复制代码
+```
 4.使用方法
 
 参见sitemap插件介绍
@@ -321,6 +324,13 @@ feed:
 
 在md或yml文件中写中文内容，发布出来后为乱码，原因是文件的编码不对，将文件另存为“UTF-8”编码的文件即可解决问题。
 
+6.2 提交README.md文件到github
+
+每次只执行hexo deploy前,将准备好的README.md拷贝到public目录,再执行hexo deploy.
+``` bash
+$cp README.md ./pubilc
+$hexo deploy
+```
 References
 [1]: http://www.cnblogs.com/zhcncn/p/3787849.html    "Windows下Git安装指南"
 
