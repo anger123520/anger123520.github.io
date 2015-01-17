@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Earl Lee&#39;s Blog --- 编程随笔</title>
+    <title>build gitpage | Earl Lee&#39;s Blog --- 编程随笔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Earl Lee">
     
-    <meta name="description" content="学习总结 思考感悟 知识管理">
+    <meta name="description" itemprop="description" content="使用github制作自己的blog">
     
     
-    <meta name="description" content="学习总结 思考感悟 知识管理">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Earl Lee's Blog --- 编程随笔">
-<meta property="og:url" content="http://yoursite.com/">
+    <meta name="description" content="使用github制作自己的blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="build gitpage">
+<meta property="og:url" content="http://yoursite.com/2015/01/17/build-gitpage/">
 <meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
-<meta property="og:description" content="学习总结 思考感悟 知识管理">
+<meta property="og:description" content="使用github制作自己的blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Earl Lee's Blog --- 编程随笔">
-<meta name="twitter:description" content="学习总结 思考感悟 知识管理">
+<meta name="twitter:title" content="build gitpage">
+<meta name="twitter:description" content="使用github制作自己的blog">
 
 
     
@@ -75,12 +75,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2015/01/17/build-gitpage/" title="build gitpage" itemprop="url">build gitpage</a>
@@ -94,9 +92,16 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h1 id="创建说明">创建说明</h1>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建说明"><span class="toc-number">1.</span> <span class="toc-text">创建说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作示例"><span class="toc-number">1.1.</span> <span class="toc-text">操作示例</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="创建说明">创建说明</h1>
 <p>这是<a href="https://anger123520.github.io/" target="_blank" rel="external">Earl Lee</a>的Git Pages示例!</p>
 <p><a href="https://github.com/anger123520/anger123520.github.io" target="_blank" rel="external">代码树</a>欢迎使用,并指正!</p>
 <h2 id="操作示例">操作示例</h2>
@@ -331,14 +336,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$cp</span> README.md ./pubilc</div><div class="line"><span class="variable">$hexo</span> deploy</div></pre></td></tr></table></figure>
 
 <p>References</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
@@ -356,319 +356,43 @@
 
 
 
-
-<div class="comments-count">
+	<div class="article-share" id="share">
 	
-</div>
+	  <div data-url="http://yoursite.com/2015/01/17/build-gitpage/" data-title="build gitpage | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
 
 </footer>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/a-c-test/" title="Hello Git Pages" itemprop="url">Hello Git Pages</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T06:29:30.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Hello_Git_Pages">Hello Git Pages</h2>
-<h3 id="a_c_test">a c test</h3>
-<p>*</p>
-<p>Here is an example of C Language:</p>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> agrc, <span class="keyword">char</span> **argv)</div><div class="line">{</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Hello Git Pages...\n"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p><em>
-</em></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/C-Language/">C Language</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
+   	       
+	</article>
 	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/01/17/a-c-test/"  title="Hello Git Pages">
+ <strong>下一篇：</strong><br/> 
+ <span>Hello Git Pages
+</span>
+</a>
 </div>
 
-</footer>
+</nav>
 
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/a-shellscript/" title="Shell Script实例" itemprop="url">Shell Script实例</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T06:28:30.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="bash_说明">bash 说明</h2>
-<ul>
-<li>递归搜索该路径下所有文件（包括子目录中的文件），</li>
-<li>如果某一文件内容中有Broadcom字串，替换成Inspur字串，生成新的文件，添加后缀.new；</li>
-<li>并给出新、旧文件的大小。如果路径不存在或者无访问权限，需给出提示信息。例如：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ convert.sh Q3</div></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Q3/sub1/sub12/file1 (1238 bytes) -&gt; Q3/sub1/sub12/file1.new (1236 bytes)<br>Q3/sub2/main.c (1238 bytes)      -&gt; Q3/sub2/main.c.new (1236 bytes) </p>
-</blockquote>
-<h3 id="bash_实例">bash 实例</h3>
-<p>Here is an example of Shell Script:</p>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="shebang">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="function"><span class="title">FindFile</span></span>()</div><div class="line">{</div><div class="line">	CURDIR=<span class="variable">$1</span></div><div class="line">	<span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">${CURDIR}</span>/*; <span class="keyword">do</span></div><div class="line">		<span class="keyword">if</span> [ <span class="operator">-f</span> <span class="variable">${file}</span> ]; <span class="keyword">then</span></div><div class="line">			<span class="keyword">if</span> [ -r <span class="variable">${file}</span> ]; <span class="keyword">then</span></div><div class="line">				needfile=`grep <span class="string">"Broadcom"</span> <span class="variable">${file}</span> <span class="operator">-l</span>`</div><div class="line">				<span class="keyword">if</span> [ <span class="variable">${needfile}</span> ]; <span class="keyword">then</span></div><div class="line">					cat <span class="variable">$file</span> | sed <span class="string">'s#Broadcom#Inspur#g'</span> &gt; <span class="variable">${file}</span>.new</div><div class="line">					ORI_FILE_SIZE=`wc -c <span class="variable">${file}</span> | awk <span class="string">'{print $1}'</span>`</div><div class="line">					NEW_FILE_SIZE=`wc -c <span class="variable">${file}</span>.new | awk <span class="string">'{print $1}'</span>`</div><div class="line">					<span class="built_in">echo</span> <span class="string">"<span class="variable">${file}</span> ( <span class="variable">${ORI_FILE_SIZE}</span> bytes) -&gt; <span class="variable">${file}</span>.new ( <span class="variable">${NEW_FILE_SIZE}</span> bytes)"</span></div><div class="line">				<span class="keyword">fi</span></div><div class="line">			<span class="keyword">else</span></div><div class="line">				<span class="built_in">echo</span> <span class="string">"<span class="variable">${file}</span> no access permissions..."</span></div><div class="line">			<span class="keyword">fi</span></div><div class="line">		<span class="keyword">else</span></div><div class="line">			FindFile <span class="variable">${file}</span></div><div class="line">		<span class="keyword">fi</span></div><div class="line">	<span class="keyword">done</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> != <span class="number">1</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"Please input the path for search..."</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"e.g: ./convert.sh /home/test "</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">SEARCH_PATH=<span class="variable">$1</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ ! <span class="operator">-d</span> <span class="variable">${SEARCH_PATH}</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"<span class="variable">${SEARCH_PATH}</span> is not exist..."</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">FindFile <span class="variable">${SEARCH_PATH}</span></div></pre></td></tr></table></figure>
-
-<p>经调试,完成功能<br>*</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/bash/">bash</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
 	
-</div>
 
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/a-makefile/" title="Makefile实例" itemprop="url">Makefile实例</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T06:27:30.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Makefile_说明">Makefile 说明</h2>
-<ul>
-<li>某开发人员维护的一个模块，其目录结构如下：</li>
-<li>X        | 该目录下有100个文件：x1.c、x2.c、……、x100.c</li>
-<li>Y        | 该目录下有100个文件：z1.c、y2.c、……、y100.c</li>
-<li>Z        | 该目录下有100个文件：z1.c、z2.c、……、z100.c</li>
-<li>test     | 该目录下有test.c</li>
-<li>mips     | 等您创建：用于存放mips平台的编译输出文件</li>
-<li>i386     | 等您创建：用于存放i386平台的编译输出文件</li>
-<li>Makefile | 等您完成</li>
-<li>目标平台是博通机顶盒（mipsel-linux-gcc），</li>
-<li>测试平台（也是交叉编译的平台）是i386电脑linux操作系统（gcc）。</li>
-<li>此Makefile要求生成3个目标：libmips.a、libi386.a、test.elf</li>
-<li>libmips.a库：目标平台，由(x<em>.c、y</em>.c、z*.c)编译（生成扩展名为.mips）而得。</li>
-<li>libi386.a库：测试平台，由(x<em>.c、y</em>.c、z*.c)编译（生成扩展名为.i386）而得。</li>
-<li>test.elf测试程序：test.c（内有main函数）编译成test.i386后链接libi386.a而得。</li>
-<li>make时首先生成测试程序test.elf（同时要求生成test.map文件）,然后运行test.elf，如果运行正确（返回0）则编译生成libmips.a，否则删除libmips.a（如果有的话）。</li>
-</ul>
-<h3 id="Makefile_实例">Makefile 实例</h3>
-<p>Here is an example of Makefile:</p>
-
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="constant">CC</span>:=gcc</div><div class="line"><span class="constant">CROSS_CC</span>:=mipsel-linux</div><div class="line"></div><div class="line"><span class="constant">CFLAGS</span>=-g</div><div class="line"></div><div class="line">.SUFFIXES:</div><div class="line">.SUFFIXES:.c .a .mips .i386 .elf</div><div class="line"></div><div class="line"><span class="constant">SRCDIR</span>:=./X ./Y ./Z ./test</div><div class="line"></div><div class="line"><span class="comment">#vpath %.c $(SRCDIR)</span></div><div class="line"></div><div class="line"><span class="constant">TEST_DIR</span>:=./test</div><div class="line"><span class="constant">TEST_SOURCE</span>:=<span class="variable">$(TEST_DIR)</span>/test.c</div><div class="line"><span class="constant">TEST_MAP</span>:=<span class="variable">$(TEST_DIR)</span>/test.map</div><div class="line"><span class="constant">TEST_OBJ</span>:=<span class="variable">$(TEST_DIR)</span>/test.i386</div><div class="line"><span class="constant">TEST_ELF</span>:=<span class="variable">$(TEST_DIR)</span>/test.elf</div><div class="line"></div><div class="line"><span class="comment"># find all .c files</span></div><div class="line"><span class="constant">ALLSRC</span>:=<span class="variable">$(foreach DIR, $(SRCDIR)</span>, <span class="variable">$(wildcard $(DIR)</span>/*.c))</div><div class="line"><span class="comment"># filter test.c file</span></div><div class="line"><span class="constant">SRC</span>:=<span class="variable">$(filter-out $(TEST_SOURCE)</span>,<span class="variable">$(ALLSRC)</span>)</div><div class="line"></div><div class="line"><span class="comment">#HOST_OBJ:=${SRC:.c=.i386}</span></div><div class="line"><span class="comment">#TARGET_OBJ:=${SRC:.c=.mips}</span></div><div class="line"><span class="constant">HOST_OBJ</span>:=<span class="variable">$(patsubst %.c,%.i386,$(SRC)</span>)</div><div class="line"><span class="constant">TARGET_OBJ</span>:=<span class="variable">$(patsubst %.c,%.mips,$(SRC)</span>)</div><div class="line"></div><div class="line"><span class="constant">HOST_LIB_DIR</span>:=./i386</div><div class="line"><span class="constant">HOST_LIB</span>:=libi386.a</div><div class="line"><span class="constant">TARGET_LIB_DIR</span>:=./mips</div><div class="line"><span class="constant">TARGET_LIB</span>:=libmips.a</div><div class="line"></div><div class="line"><span class="phony"><span class="keyword">.PHONY</span>:all clean</span></div><div class="line"></div><div class="line">all:$(TEST_ELF)</div><div class="line">	@if [ -x ${TEST_ELF} ]; then ${TEST_ELF} && <span class="variable">$(MAKE)</span> <span class="variable">$(TARGET_LIB_DIR)</span>/<span class="variable">$(TARGET_LIB)</span> || <span class="variable">$(MAKE)</span> clean_mips; fi</div><div class="line"></div><div class="line">$(HOST_LIB_DIR)/$(HOST_LIB):$(HOST_OBJ)</div><div class="line">	@if test ! -d <span class="variable">$(HOST_LIB_DIR)</span>; then mkdir -p <span class="variable">$(HOST_LIB_DIR)</span>; else rm -fr <span class="variable">$(HOST_LIB_DIR)</span>/*; fi</div><div class="line">	@ar cur $@ <span class="variable">$(HOST_OBJ)</span></div><div class="line"></div><div class="line">$(TEST_ELF): $(HOST_LIB_DIR)/$(HOST_LIB) $(TEST_OBJ)</div><div class="line">	@<span class="variable">$(CC)</span> -o $@ $^ -Wl,-Map,<span class="variable">$(TEST_MAP)</span></div><div class="line"></div><div class="line">$(TARGET_LIB_DIR)/$(TARGET_LIB):$(TARGET_OBJ)</div><div class="line">	@if test ! -d <span class="variable">$(TARGET_LIB_DIR)</span>; then mkdir -p <span class="variable">$(TARGET_LIB_DIR)</span>; else rm -fr <span class="variable">$(TARGET_LIB_DIR)</span>/*; fi</div><div class="line">	@<span class="variable">$(CROSS_CC)</span>-ar cur $@ <span class="variable">$(TARGET_OBJ)</span></div><div class="line"></div><div class="line"><span class="comment"># default rules for obj files</span></div><div class="line">.c.i386:</div><div class="line">	@<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c -o $@ $&lt;</div><div class="line"></div><div class="line">.c.mips:</div><div class="line">	@<span class="variable">$(CROSS_CC)</span>-gcc <span class="variable">$(CFLAGS)</span> -c -o $@ $&lt;</div><div class="line"></div><div class="line"><span class="title">clean_i386:</span></div><div class="line">	-rm -f <span class="variable">$(TEST_OBJ)</span></div><div class="line">	-rm -f <span class="variable">$(TEST_ELF)</span></div><div class="line">	-rm -f <span class="variable">$(TEST_MAP)</span></div><div class="line">	-rm -f <span class="variable">$(HOST_OBJ)</span></div><div class="line">	-rm -fr <span class="variable">$(HOST_LIB_DIR)</span></div><div class="line"></div><div class="line"><span class="title">clean_mips:</span></div><div class="line">	-rm -f <span class="variable">$(TARGET_OBJ)</span></div><div class="line">	-rm -fr <span class="variable">$(TARGET_LIB_DIR)</span></div><div class="line"></div><div class="line">clean: clean_i386 clean_mips</div></pre></td></tr></table></figure>
-
-<p>经调试,按要求完成操作</p>
-<p>*</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/makefile/">makefile</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T05:48:37.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-</div>
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建说明"><span class="toc-number">1.</span> <span class="toc-text">创建说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作示例"><span class="toc-number">1.1.</span> <span class="toc-text">操作示例</span></a></li></ol></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -792,6 +516,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -811,6 +537,66 @@ $(document).ready(function(){
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
 
 
 
@@ -819,6 +605,27 @@ $(document).ready(function(){
 
 
 
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
 
 
 
@@ -845,6 +652,5 @@ $(document).ready(function(){
 
 <!-- MathJax End -->
 
-    <a href="https://github.com/anger123520"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
   </body>
- </html>
+</html>
