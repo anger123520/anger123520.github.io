@@ -83,6 +83,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/01/22/qt-connect-asynchronous/" title="qt connect asynchronous" itemprop="url">qt connect asynchronous</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-22T07:16:46.000Z" itemprop="datePublished"> 发表于 2015-01-22</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="connect接口说明">connect接口说明</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> QObject::connect ( <span class="keyword">const</span> QObject * sender, <span class="keyword">const</span> <span class="keyword">char</span> * signal, <span class="keyword">const</span> QObject * receiver, <span class="keyword">const</span> <span class="keyword">char</span> * method, Qt::ConnectionType type = Qt::AutoConnection ) [<span class="keyword">static</span>]</div></pre></td></tr></table></figure>
+
+<p>enum Qt::ConnectionType</p>
+<h1 id="This_enum_describes_the_types_of_connection_that_can_be_used_between_signals_and_slots-">This enum describes the types of connection that can be used between signals and slots.</h1>
+<h1 id="In_particular,_it_determines_whether_a_particular_signal_is_delivered_to_a_slot_immediately_or_queued_for_delivery_at_a_later_time-">In particular, it determines whether a particular signal is delivered to a slot immediately or queued for delivery at a later time.</h1>
+<p>| Constant                   | Value    | Description<br>|Qt::AutoConnection          | 0        |(default) If the signal is emitted from a different thread than the receiving object, the signal is queued, behaving as Qt::QueuedConnection. Otherwise, the slot is invoked directly, behaving as Qt::DirectConnection. The type of connection is determined when the signal is emitted.<br>|Qt::DirectConnection        | 1        |The slot is invoked immediately, when the signal is emitted.<br>|Qt::QueuedConnection        | 2        |The slot is invoked when control returns to the event loop of the receiver’s thread. The slot is executed in the receiver’s thread.<br>|Qt::BlockingQueuedConnection| 4        |Same as QueuedConnection, except the current thread blocks until the slot returns. This connection type should only be used where the emitter and receiver are in different threads. Note: Violating this rule can cause your application to deadlock.<br>|Qt::UniqueConnection        | 0x80     |Same as AutoConnection, but the connection is made only if it does not duplicate an existing connection. i.e., if the same signal is already connected to the same slot for the same pair of objects, then the connection will fail. This connection type was introduced in Qt 4.6.<br>|Qt::AutoCompatConnection    | 3        |The default type when Qt 3 support is enabled. Same as AutoConnection but will also cause warnings to be output in certain situations. See <a href="http://qt-project.org/porting4.html#compatibility-signals-and-slots" target="_blank" rel="external">Compatibility Signals and Slots</a> for further information.</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Qt/">Qt</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/01/19/embed-music-pic-vedio/" title="embed music pic vedio" itemprop="url">embed music pic vedio</a>
   </h1>
   <p class="article-author">By
@@ -834,7 +900,7 @@
 		
 			<li><a href="/categories/Blog/" title="Blog">Blog<sup>2</sup></a></li>
 		
-			<li><a href="/categories/Linux/" title="Linux">Linux<sup>3</sup></a></li>
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>4</sup></a></li>
 		
 			<li><a href="/categories/Windows/" title="Windows">Windows<sup>1</sup></a></li>
 		
@@ -846,6 +912,8 @@
 <div class="tagslist">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
+		
+			<li><a href="/tags/Qt/" title="Qt">Qt<sup>1</sup></a></li>
 		
 			<li><a href="/tags/markdown/" title="markdown">markdown<sup>1</sup></a></li>
 		

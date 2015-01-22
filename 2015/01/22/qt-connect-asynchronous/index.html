@@ -4,26 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | Earl Lee&#39;s Blog --- 编程随笔</title>
+    <title>qt connect asynchronous | Earl Lee&#39;s Blog --- 编程随笔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Earl Lee">
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+    <meta name="description" itemprop="description" content="connect asynchronous Operation">
     
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="connect asynchronous Operation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2015/01/17/hello-world/">
+<meta property="og:title" content="qt connect asynchronous">
+<meta property="og:url" content="http://yoursite.com/2015/01/22/qt-connect-asynchronous/">
 <meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+<meta property="og:description" content="connect asynchronous Operation">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in trobuleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="qt connect asynchronous">
+<meta name="twitter:description" content="connect asynchronous Operation">
 
 
     
@@ -84,14 +81,14 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/17/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/01/22/qt-connect-asynchronous/" title="qt connect asynchronous" itemprop="url">qt connect asynchronous</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-17T05:48:37.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
+    <time datetime="2015-01-22T07:16:46.000Z" itemprop="datePublished"> 发表于 2015-01-22</time>
     
   </p>
 </header>
@@ -100,33 +97,32 @@ Quick">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#connect接口说明"><span class="toc-number">1.</span> <span class="toc-text">connect接口说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#This_enum_describes_the_types_of_connection_that_can_be_used_between_signals_and_slots-"><span class="toc-number"></span> <span class="toc-text">This enum describes the types of connection that can be used between signals and slots.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#In_particular,_it_determines_whether_a_particular_signal_is_delivered_to_a_slot_immediately_or_queued_for_delivery_at_a_later_time-"><span class="toc-number"></span> <span class="toc-text">In particular, it determines whether a particular signal is delivered to a slot immediately or queued for delivery at a later time.</span></a>
 		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+		<h2 id="connect接口说明">connect接口说明</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> QObject::connect ( <span class="keyword">const</span> QObject * sender, <span class="keyword">const</span> <span class="keyword">char</span> * signal, <span class="keyword">const</span> QObject * receiver, <span class="keyword">const</span> <span class="keyword">char</span> * method, Qt::ConnectionType type = Qt::AutoConnection ) [<span class="keyword">static</span>]</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p>enum Qt::ConnectionType</p>
+<h1 id="This_enum_describes_the_types_of_connection_that_can_be_used_between_signals_and_slots-">This enum describes the types of connection that can be used between signals and slots.</h1>
+<h1 id="In_particular,_it_determines_whether_a_particular_signal_is_delivered_to_a_slot_immediately_or_queued_for_delivery_at_a_later_time-">In particular, it determines whether a particular signal is delivered to a slot immediately or queued for delivery at a later time.</h1>
+<p>| Constant                   | Value    | Description<br>|Qt::AutoConnection          | 0        |(default) If the signal is emitted from a different thread than the receiving object, the signal is queued, behaving as Qt::QueuedConnection. Otherwise, the slot is invoked directly, behaving as Qt::DirectConnection. The type of connection is determined when the signal is emitted.<br>|Qt::DirectConnection        | 1        |The slot is invoked immediately, when the signal is emitted.<br>|Qt::QueuedConnection        | 2        |The slot is invoked when control returns to the event loop of the receiver’s thread. The slot is executed in the receiver’s thread.<br>|Qt::BlockingQueuedConnection| 4        |Same as QueuedConnection, except the current thread blocks until the slot returns. This connection type should only be used where the emitter and receiver are in different threads. Note: Violating this rule can cause your application to deadlock.<br>|Qt::UniqueConnection        | 0x80     |Same as AutoConnection, but the connection is made only if it does not duplicate an existing connection. i.e., if the same signal is already connected to the same slot for the same pair of objects, then the connection will fail. This connection type was introduced in Qt 4.6.<br>|Qt::AutoCompatConnection    | 3        |The default type when Qt 3 support is enabled. Same as AutoConnection but will also cause warnings to be output in certain situations. See <a href="http://qt-project.org/porting4.html#compatibility-signals-and-slots" target="_blank" rel="external">Compatibility Signals and Slots</a> for further information.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Qt/">Qt</a>
+  </div>
 
 </div>
 
@@ -134,7 +130,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/01/17/hello-world/" data-title="Hello World | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/01/22/qt-connect-asynchronous/" data-title="qt connect asynchronous | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -147,14 +143,14 @@ Quick">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/17/a-makefile/" title="Makefile实例">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Makefile实例</span>
+
+<div class="next">
+<a href="/2015/01/19/embed-music-pic-vedio/"  title="embed music pic vedio">
+ <strong>下一篇：</strong><br/> 
+ <span>embed music pic vedio
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -166,7 +162,7 @@ Quick">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#connect接口说明"><span class="toc-number">1.</span> <span class="toc-text">connect接口说明</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#This_enum_describes_the_types_of_connection_that_can_be_used_between_signals_and_slots-"><span class="toc-number"></span> <span class="toc-text">This enum describes the types of connection that can be used between signals and slots.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#In_particular,_it_determines_whether_a_particular_signal_is_delivered_to_a_slot_immediately_or_queued_for_delivery_at_a_later_time-"><span class="toc-number"></span> <span class="toc-text">In particular, it determines whether a particular signal is delivered to a slot immediately or queued for delivery at a later time.</span></a>
  
   </div>
 
