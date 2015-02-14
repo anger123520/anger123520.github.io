@@ -1,0 +1,448 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>linux_safety | Earl Lee&#39;s Blog --- 编程随笔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Earl Lee">
+    
+    <meta name="description" itemprop="description" content="按要求实现用户权限创建设备">
+    
+    
+    <meta name="description" content="按要求实现用户权限创建设备">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux_safety">
+<meta property="og:url" content="http://yoursite.com/2015/02/14/linux-safety/">
+<meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
+<meta property="og:description" content="按要求实现用户权限创建设备">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux_safety">
+<meta name="twitter:description" content="按要求实现用户权限创建设备">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Earl Lee&#39;s Blog --- 编程随笔" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Earl Lee&#39;s Blog --- 编程随笔" title="Earl Lee&#39;s Blog --- 编程随笔"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Earl Lee&#39;s Blog --- 编程随笔">Earl Lee&#39;s Blog --- 编程随笔</a></h1>
+				<h2 class="blog-motto">心有猛虎 细嗅蔷薇</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/14/linux-safety/" title="linux_safety" itemprop="url">linux_safety</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-14T07:46:39.000Z" itemprop="datePublished"> 发表于 2015-02-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">1.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="说明">说明</h2>
+<ul>
+<li>完成程序testmkmod，功能为在/tmp目录下创建设备testmod。</li>
+<li>1、testmod是字符设备，主设备号1，次设备号10。</li>
+<li>2、testmod使用root权限运行，设置完capability后将权限降低为普通用户权限。</li>
+<li>3、降低为普通用户权限后调用 init_exam(“xxx@inspur.com”,Q_4)。 </li>
+<li>4、使用用户权限创建设备。即/tmp/testmod 的所有者为用户。</li>
+<li>5、退出前调用 exit_exam 。</li>
+<li>6、提供源码，Answer_4.</li>
+</ul>
+<h3 id="实例">实例</h3>
+<p>Here is an example of c language:</p>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/********************************************************************************</span></div><div class="line"> * 完成程序testmkmod，功能为在/tmp目录下创建设备testmod。</div><div class="line"> * 1、testmod是字符设备，主设备号1，次设备号10。</div><div class="line"> * 2、testmod使用root权限运行，设置完capability后将权限降低为普通用户权限。</div><div class="line"> * 3、降低为普通用户权限后调用 init_exam(“xxx@inspur.com”,Q_4)。 </div><div class="line"> * 4、使用用户权限创建设备。即/tmp/testmod 的所有者为用户。</div><div class="line"> * 5、退出前调用 exit_exam 。</div><div class="line"> * 6、提供源码，Answer_4.</div><div class="line"> ********************************************************************************</div><div class="line"> * build && run:</div><div class="line"> * 1.build:</div><div class="line"> * #gcc -o testmknod testmknod.c -I. -L. -lexamcheck_32 -lcap</div><div class="line"> * 2.run:</div><div class="line"> * #./testmknod(make sure read && write as user in current directory)</div><div class="line"> ********************************************************************************</div><div class="line"> * author: lizhiyun@inspur.com  2015-01-30 create</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/stat.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/capability.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/prctl.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;errno.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;fcntl.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;unistd.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> "examcheck.h"</span></div><div class="line"></div><div class="line"><span class="comment">//#define _DEBUG_</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> cap_t  capabilities;</div><div class="line"></div><div class="line"><span class="keyword">void</span> list_caps()</div><div class="line">{</div><div class="line"><span class="preprocessor">#ifdef _DEBUG_</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">" UID\t= %d\n"</span>, getuid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" EUID\t= %d\n"</span>, geteuid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" GID\t= %d\n"</span>, getgid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" EGID\t= %d\n"</span>, getegid());</div><div class="line"></div><div class="line">	cap_t caps_temp = cap_get_proc();</div><div class="line">	ssize_t y = <span class="number">0</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"The process %d was give capabilities %s\n"</span>, (<span class="keyword">int</span>)getpid(), cap_to_text(caps_temp, &y)); </div><div class="line"></div><div class="line">	fflush(<span class="number">0</span>);</div><div class="line">	cap_free(caps_temp);</div><div class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></div><div class="line">	<span class="keyword">return</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">int</span> proc_capability()</div><div class="line">{</div><div class="line">	uid_t       user = <span class="number">1000</span>;</div><div class="line">    cap_value_t root_caps[<span class="number">3</span>] = { CAP_MKNOD, CAP_SETUID, CAP_SETGID };</div><div class="line">    cap_value_t user_caps[<span class="number">2</span>] = { CAP_MKNOD, CAP_SETUID };</div><div class="line"></div><div class="line">	<span class="comment">/* Create an empty set of capabilities. */</span></div><div class="line">    capabilities = cap_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Capabilities have three subsets:</span></div><div class="line">     *      INHERITABLE:    Capabilities permitted after an execv()</div><div class="line">     *      EFFECTIVE:      Currently effective capabilities</div><div class="line">     *      PERMITTED:      Limiting set for the two above.</div><div class="line">     * See man 7 capabilities for details, Thread Capability Sets.</div><div class="line">     *</div><div class="line">     * We need the following capabilities:</div><div class="line">     *      CAP_MKNOD       For Create special files using mknod(2).</div><div class="line">     *      CAP_SETUID      Make arbitrary manipulations of process UIDs (setuid(2), setreuid(2), setresuid(2), setfsuid(2));</div><div class="line">     *                      make forged UID when  passing socket credentials via UNIX domain sockets.</div><div class="line">     *      CAP_SETGID      Make arbitrary manipulations of process GIDs and supplementary GID list;</div><div class="line">     *                      forge GID when passing socket credentials  via UNIX domain sockets.</div><div class="line">     * in the last two subsets. We do not need to retain any capabilities</div><div class="line">     * over an exec().</div><div class="line">    */</div><div class="line">    <span class="keyword">if</span> (cap_set_flag(capabilities, CAP_PERMITTED, <span class="keyword">sizeof</span> root_caps / <span class="keyword">sizeof</span> root_caps[<span class="number">0</span>], root_caps, CAP_SET) ||</div><div class="line">        cap_set_flag(capabilities, CAP_EFFECTIVE, <span class="keyword">sizeof</span> root_caps / <span class="keyword">sizeof</span> root_caps[<span class="number">0</span>], root_caps, CAP_SET))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot manipulate capability data structure as root: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Above, we just manipulated the data structure describing the flags,</span></div><div class="line">     * not the capabilities themselves. So, set those capabilities now. */</div><div class="line">    <span class="keyword">if</span> (cap_set_proc(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot set capabilities as root: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* We wish to retain the capabilities across the identity change,</span></div><div class="line">     * so we need to tell the kernel. */</div><div class="line">    <span class="keyword">if</span> (prctl(PR_SET_KEEPCAPS, <span class="number">1L</span>))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot keep capabilities after dropping privileges: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Drop extra privileges (aside from capabilities) by switching</span></div><div class="line">     * to the original real user. */</div><div class="line">    <span class="keyword">if</span> (setgid(user))</div><div class="line">	{</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Cannot drop root gid: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">	}</div><div class="line">    <span class="keyword">if</span> (setresuid(user, user, user))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot drop root privileges: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">	</div><div class="line">    <span class="comment">/* We can still switch to a different user due to having the CAP_SETUID</span></div><div class="line">     * capability. Let's clear the capability set, except for the CAP_MKNOD</div><div class="line">     * in the permitted and effective sets. */</div><div class="line">    <span class="keyword">if</span> (cap_clear(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot clear capability data structure: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span> (cap_set_flag(capabilities, CAP_PERMITTED, <span class="keyword">sizeof</span> user_caps / <span class="keyword">sizeof</span> user_caps[<span class="number">0</span>], user_caps, CAP_SET) ||</div><div class="line">        cap_set_flag(capabilities, CAP_EFFECTIVE, <span class="keyword">sizeof</span> user_caps / <span class="keyword">sizeof</span> user_caps[<span class="number">0</span>], user_caps, CAP_SET))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot manipulate capability data structure as user: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Apply modified capabilities. */</span></div><div class="line">    <span class="keyword">if</span> (cap_set_proc(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot set capabilities as user: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> **agrv)</div><div class="line">{</div><div class="line">	list_caps();	</div><div class="line">	proc_capability();</div><div class="line">	list_caps();</div><div class="line">	init_exam(<span class="string">"lizhiyun@inspur.com"</span>, Q_4);</div><div class="line">	<span class="comment">//create the node ,0666</span></div><div class="line">	<span class="keyword">if</span> (mknod(<span class="string">"/tmp/testmod"</span>, S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH, makedev(<span class="number">1</span>, <span class="number">10</span>)))</div><div class="line">	{</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Cannot mknod /tmp/testmod: %s.\n"</span>, strerror(errno));</div><div class="line">	}</div><div class="line"></div><div class="line">	exit_exam();</div><div class="line">	cap_free(capabilities);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>经调试,按要求完成操作</p>
+<p>*</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C-Language/">C Language</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/02/14/linux-safety/" data-title="linux_safety | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/01/22/qt-connect-asynchronous/"  title="qt connect asynchronous">
+ <strong>下一篇：</strong><br/> 
+ <span>qt connect asynchronous
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">1.1.</span> <span class="toc-text">实例</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Blog/" title="Blog">Blog<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>5</sup></a></li>
+		
+			<li><a href="/categories/Windows/" title="Windows">Windows<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Qt/" title="Qt">Qt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/markdown/" title="markdown">markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fq/" title="fq">fq<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gitpages/" title="gitpages">gitpages<sup>1</sup></a></li>
+		
+			<li><a href="/tags/makefile/" title="makefile">makefile<sup>1</sup></a></li>
+		
+			<li><a href="/tags/bash/" title="bash">bash<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://blog.sina.com.cn/anger123520" target="_blank" title="记录点滴">伯爵的Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=null&verifier=0151a4fb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 学习总结 思考感悟 知识管理 <br/>
+			Write everything here by myself</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1708541802" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/anger123520" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://www.douban.com/people/79351409" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Earl Lee">Earl Lee</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

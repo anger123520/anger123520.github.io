@@ -83,6 +83,82 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/02/14/linux-safety/" title="linux_safety" itemprop="url">linux_safety</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-14T07:46:39.000Z" itemprop="datePublished"> 发表于 2015-02-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="说明">说明</h2>
+<ul>
+<li>完成程序testmkmod，功能为在/tmp目录下创建设备testmod。</li>
+<li>1、testmod是字符设备，主设备号1，次设备号10。</li>
+<li>2、testmod使用root权限运行，设置完capability后将权限降低为普通用户权限。</li>
+<li>3、降低为普通用户权限后调用 init_exam(“xxx@inspur.com”,Q_4)。 </li>
+<li>4、使用用户权限创建设备。即/tmp/testmod 的所有者为用户。</li>
+<li>5、退出前调用 exit_exam 。</li>
+<li>6、提供源码，Answer_4.</li>
+</ul>
+<h3 id="实例">实例</h3>
+<p>Here is an example of c language:</p>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/********************************************************************************</span></div><div class="line"> * 完成程序testmkmod，功能为在/tmp目录下创建设备testmod。</div><div class="line"> * 1、testmod是字符设备，主设备号1，次设备号10。</div><div class="line"> * 2、testmod使用root权限运行，设置完capability后将权限降低为普通用户权限。</div><div class="line"> * 3、降低为普通用户权限后调用 init_exam(“xxx@inspur.com”,Q_4)。 </div><div class="line"> * 4、使用用户权限创建设备。即/tmp/testmod 的所有者为用户。</div><div class="line"> * 5、退出前调用 exit_exam 。</div><div class="line"> * 6、提供源码，Answer_4.</div><div class="line"> ********************************************************************************</div><div class="line"> * build && run:</div><div class="line"> * 1.build:</div><div class="line"> * #gcc -o testmknod testmknod.c -I. -L. -lexamcheck_32 -lcap</div><div class="line"> * 2.run:</div><div class="line"> * #./testmknod(make sure read && write as user in current directory)</div><div class="line"> ********************************************************************************</div><div class="line"> * author: lizhiyun@inspur.com  2015-01-30 create</div><div class="line"> */</div><div class="line"></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/stat.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/capability.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/prctl.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;errno.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;fcntl.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;unistd.h&gt;</span></div><div class="line"><span class="preprocessor">#<span class="keyword">include</span> "examcheck.h"</span></div><div class="line"></div><div class="line"><span class="comment">//#define _DEBUG_</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> cap_t  capabilities;</div><div class="line"></div><div class="line"><span class="keyword">void</span> list_caps()</div><div class="line">{</div><div class="line"><span class="preprocessor">#ifdef _DEBUG_</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">" UID\t= %d\n"</span>, getuid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" EUID\t= %d\n"</span>, geteuid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" GID\t= %d\n"</span>, getgid());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">" EGID\t= %d\n"</span>, getegid());</div><div class="line"></div><div class="line">	cap_t caps_temp = cap_get_proc();</div><div class="line">	ssize_t y = <span class="number">0</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"The process %d was give capabilities %s\n"</span>, (<span class="keyword">int</span>)getpid(), cap_to_text(caps_temp, &y)); </div><div class="line"></div><div class="line">	fflush(<span class="number">0</span>);</div><div class="line">	cap_free(caps_temp);</div><div class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></div><div class="line">	<span class="keyword">return</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">int</span> proc_capability()</div><div class="line">{</div><div class="line">	uid_t       user = <span class="number">1000</span>;</div><div class="line">    cap_value_t root_caps[<span class="number">3</span>] = { CAP_MKNOD, CAP_SETUID, CAP_SETGID };</div><div class="line">    cap_value_t user_caps[<span class="number">2</span>] = { CAP_MKNOD, CAP_SETUID };</div><div class="line"></div><div class="line">	<span class="comment">/* Create an empty set of capabilities. */</span></div><div class="line">    capabilities = cap_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Capabilities have three subsets:</span></div><div class="line">     *      INHERITABLE:    Capabilities permitted after an execv()</div><div class="line">     *      EFFECTIVE:      Currently effective capabilities</div><div class="line">     *      PERMITTED:      Limiting set for the two above.</div><div class="line">     * See man 7 capabilities for details, Thread Capability Sets.</div><div class="line">     *</div><div class="line">     * We need the following capabilities:</div><div class="line">     *      CAP_MKNOD       For Create special files using mknod(2).</div><div class="line">     *      CAP_SETUID      Make arbitrary manipulations of process UIDs (setuid(2), setreuid(2), setresuid(2), setfsuid(2));</div><div class="line">     *                      make forged UID when  passing socket credentials via UNIX domain sockets.</div><div class="line">     *      CAP_SETGID      Make arbitrary manipulations of process GIDs and supplementary GID list;</div><div class="line">     *                      forge GID when passing socket credentials  via UNIX domain sockets.</div><div class="line">     * in the last two subsets. We do not need to retain any capabilities</div><div class="line">     * over an exec().</div><div class="line">    */</div><div class="line">    <span class="keyword">if</span> (cap_set_flag(capabilities, CAP_PERMITTED, <span class="keyword">sizeof</span> root_caps / <span class="keyword">sizeof</span> root_caps[<span class="number">0</span>], root_caps, CAP_SET) ||</div><div class="line">        cap_set_flag(capabilities, CAP_EFFECTIVE, <span class="keyword">sizeof</span> root_caps / <span class="keyword">sizeof</span> root_caps[<span class="number">0</span>], root_caps, CAP_SET))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot manipulate capability data structure as root: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Above, we just manipulated the data structure describing the flags,</span></div><div class="line">     * not the capabilities themselves. So, set those capabilities now. */</div><div class="line">    <span class="keyword">if</span> (cap_set_proc(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot set capabilities as root: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* We wish to retain the capabilities across the identity change,</span></div><div class="line">     * so we need to tell the kernel. */</div><div class="line">    <span class="keyword">if</span> (prctl(PR_SET_KEEPCAPS, <span class="number">1L</span>))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot keep capabilities after dropping privileges: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Drop extra privileges (aside from capabilities) by switching</span></div><div class="line">     * to the original real user. */</div><div class="line">    <span class="keyword">if</span> (setgid(user))</div><div class="line">	{</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Cannot drop root gid: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">	}</div><div class="line">    <span class="keyword">if</span> (setresuid(user, user, user))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot drop root privileges: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">	</div><div class="line">    <span class="comment">/* We can still switch to a different user due to having the CAP_SETUID</span></div><div class="line">     * capability. Let's clear the capability set, except for the CAP_MKNOD</div><div class="line">     * in the permitted and effective sets. */</div><div class="line">    <span class="keyword">if</span> (cap_clear(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot clear capability data structure: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span> (cap_set_flag(capabilities, CAP_PERMITTED, <span class="keyword">sizeof</span> user_caps / <span class="keyword">sizeof</span> user_caps[<span class="number">0</span>], user_caps, CAP_SET) ||</div><div class="line">        cap_set_flag(capabilities, CAP_EFFECTIVE, <span class="keyword">sizeof</span> user_caps / <span class="keyword">sizeof</span> user_caps[<span class="number">0</span>], user_caps, CAP_SET))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot manipulate capability data structure as user: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Apply modified capabilities. */</span></div><div class="line">    <span class="keyword">if</span> (cap_set_proc(capabilities))</div><div class="line">    {</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Cannot set capabilities as user: %s.\n"</span>, strerror(errno));</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> **agrv)</div><div class="line">{</div><div class="line">	list_caps();	</div><div class="line">	proc_capability();</div><div class="line">	list_caps();</div><div class="line">	init_exam(<span class="string">"lizhiyun@inspur.com"</span>, Q_4);</div><div class="line">	<span class="comment">//create the node ,0666</span></div><div class="line">	<span class="keyword">if</span> (mknod(<span class="string">"/tmp/testmod"</span>, S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH, makedev(<span class="number">1</span>, <span class="number">10</span>)))</div><div class="line">	{</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Cannot mknod /tmp/testmod: %s.\n"</span>, strerror(errno));</div><div class="line">	}</div><div class="line"></div><div class="line">	exit_exam();</div><div class="line">	cap_free(capabilities);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>经调试,按要求完成操作</p>
+<p>*</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C-Language/">C Language</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/01/22/qt-connect-asynchronous/" title="qt connect asynchronous" itemprop="url">qt connect asynchronous</a>
   </h1>
   <p class="article-author">By
@@ -900,7 +976,7 @@
 		
 			<li><a href="/categories/Blog/" title="Blog">Blog<sup>2</sup></a></li>
 		
-			<li><a href="/categories/Linux/" title="Linux">Linux<sup>4</sup></a></li>
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>5</sup></a></li>
 		
 			<li><a href="/categories/Windows/" title="Windows">Windows<sup>1</sup></a></li>
 		
@@ -913,6 +989,8 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
+			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>2</sup></a></li>
+		
 			<li><a href="/tags/Qt/" title="Qt">Qt<sup>1</sup></a></li>
 		
 			<li><a href="/tags/markdown/" title="markdown">markdown<sup>1</sup></a></li>
@@ -922,8 +1000,6 @@
 			<li><a href="/tags/gitpages/" title="gitpages">gitpages<sup>1</sup></a></li>
 		
 			<li><a href="/tags/makefile/" title="makefile">makefile<sup>1</sup></a></li>
-		
-			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>1</sup></a></li>
 		
 			<li><a href="/tags/bash/" title="bash">bash<sup>1</sup></a></li>
 		
