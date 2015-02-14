@@ -1,0 +1,464 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>generate_makefile | Earl Lee&#39;s Blog --- 编程随笔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Earl Lee">
+    
+    <meta name="description" itemprop="description" content="写一个脚本（buildmake.sh）,用于自动生成makefile">
+    
+    
+    <meta name="description" content="写一个脚本（buildmake.sh）,用于自动生成makefile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="generate_makefile">
+<meta property="og:url" content="http://yoursite.com/2015/02/14/generate-makefile/">
+<meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
+<meta property="og:description" content="写一个脚本（buildmake.sh）,用于自动生成makefile">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="generate_makefile">
+<meta name="twitter:description" content="写一个脚本（buildmake.sh）,用于自动生成makefile">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Earl Lee&#39;s Blog --- 编程随笔" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Earl Lee&#39;s Blog --- 编程随笔" title="Earl Lee&#39;s Blog --- 编程随笔"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Earl Lee&#39;s Blog --- 编程随笔">Earl Lee&#39;s Blog --- 编程随笔</a></h1>
+				<h2 class="blog-motto">心有猛虎 细嗅蔷薇</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/14/generate-makefile/" title="generate_makefile" itemprop="url">generate_makefile</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-14T07:59:17.000Z" itemprop="datePublished"> 发表于 2015-02-14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#要求"><span class="toc-number">1.</span> <span class="toc-text">要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="要求">要求</h2>
+<ul>
+<li><p>在当前目录下，有如下文件及目录：</p>
+</li>
+<li><p>m1                          | 该子目录（子模块）下有多个C文件</p>
+</li>
+<li>m1/Makefile                  | 运行buildmake.sh生成</li>
+<li>m1/libm1.a                  | make的时候生成</li>
+<li>mX……                          | 多个子目录，与上同</li>
+<li>test.c                      | 测试文件</li>
+<li>buildmake.sh                | 等您创建</li>
+<li>Makefile.inc                | 等您创建：用于存放所有Makefile的公共引用部分</li>
+<li><p>Makefile                    | 运行buildmake.sh生成</p>
+</li>
+<li><p>任务1：完成Makefile.inc</p>
+</li>
+<li>任务2：完成buildmake.sh</li>
+<li><p>功能：<br><strong> 1）    运行buildmake.sh能够生成当前目录下的Makefile、及每一个子目录下的Makefile。
+</strong> 2）    子目录的Makefile的target目标是libmX.a，由该目录下的C文件编译生成（X86 GCC）。<br><strong> 3）    在当前目录下make的时候，先遍历所有子目录依次make，然后编译test.c，链接所有子目录下的libmX.a，生成最终目标测试程序test.elf，运行测试测试程序。
+</strong> 4）    应将可重用的部分放置在Makefile.inc中。</p>
+</li>
+<li><p>想想：如果test.elf运行出错（即返回非0），第一次make时报错，第二次make时不报错。怎么解决？</p>
+</li>
+</ul>
+<h2 id="实例">实例</h2>
+<p>Here is an example of makefile.inc:</p>
+
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">################################################################</span></div><div class="line"><span class="comment">###The Makfile.inc is common part for Makefile which include it</span></div><div class="line"><span class="comment">###Author: lizhiyun@inspur.com</span></div><div class="line"><span class="comment">################################################################</span></div><div class="line"></div><div class="line"><span class="comment">### define the Command</span></div><div class="line"><span class="constant">CC</span> = gcc</div><div class="line"><span class="constant">CFLAGS</span> = -Wall -O2</div><div class="line"><span class="constant">AR</span> = ar</div><div class="line"><span class="constant">ARFLAGS</span> = cur</div><div class="line"><span class="constant">RM</span> = -rm -rf</div><div class="line"></div><div class="line"><span class="comment">### set the source file path</span></div><div class="line"><span class="constant">SRCDIR</span> := .</div><div class="line">vpath %.c $(SRCDIR)</div><div class="line"></div><div class="line"><span class="constant">SRC</span> := <span class="variable">$(wildcard $(SRCDIR)</span>/*.c)</div><div class="line"></div><div class="line"><span class="comment">### get the current directory base name</span></div><div class="line"><span class="constant">LIBNAME</span> := <span class="variable">$(shell pwd |sed 's/^\(.*\)[/]//' )</span></div><div class="line"><span class="comment">### add the lib prefix and .a suffix to lib base name</span></div><div class="line"><span class="constant">LIB</span> := lib<span class="variable">$(LIBNAME)</span>.a</div><div class="line"></div><div class="line"><span class="constant">OBJS</span> := ${SRC:.c=.o}</div><div class="line"></div><div class="line"><span class="phony"><span class="keyword">.PHONY</span>: all clean</span></div><div class="line"></div><div class="line"></div><div class="line">%c.o: %.c</div><div class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c $^ -o <span class="variable">$(notdir $@)</span></div></pre></td></tr></table></figure>
+
+<p>Here is an example of shellscript:</p>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div></pre></td><td class="code"><pre><div class="line"><span class="shebang">#!/bin/sh</span></div><div class="line"><span class="comment">##############################################################</span></div><div class="line"><span class="comment">###The shell script is for auto generate the Makfile</span></div><div class="line"><span class="comment">###Author: lizhiyun@inspur.com</span></div><div class="line"><span class="comment">###Version: 1.0</span></div><div class="line"><span class="comment">###GNU Make 3.82</span></div><div class="line"><span class="comment">###GNU bash, version 4.2.24(1)-release (i386-redhat-linux-gnu)</span></div><div class="line"><span class="comment">###gcc (GCC) 4.7.0 20120507 (Red Hat 4.7.0-5)</span></div><div class="line"><span class="comment">##############################################################</span></div><div class="line"></div><div class="line"><span class="comment">### help page</span></div><div class="line"><span class="function"><span class="title">usage</span></span>()</div><div class="line">{</div><div class="line">	<span class="built_in">echo</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$SCRIPT_NAME</span> [options] "</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"description:"</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"The shell script is for auto generate the Makfiles."</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"options:"</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"             : generate the Makefiles && run command 'make'."</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">"  -h, --help : print this help page."</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">" --rm        : remove the auto generate Makefiles."</span></div><div class="line">    <span class="built_in">echo</span> <span class="string">" --clean     : run command 'make clean'."</span></div><div class="line">    <span class="built_in">echo</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### print the error info</span></div><div class="line">function <span class="function"><span class="title">show_error</span></span>()</div><div class="line">{</div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\033[31m <span class="variable">$1</span> \033[0m"</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### the head of the Makefile</span></div><div class="line">function <span class="function"><span class="title">common_prefix</span></span>()</div><div class="line">{</div><div class="line">	<span class="built_in">echo</span>    <span class="string">"###############################################################"</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"###The makefile is auto generate, don't modify it"</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"###Create at <span class="variable">${1}</span> <span class="variable">${2}</span> <span class="variable">${3}</span> <span class="variable">${4}</span> <span class="variable">${6}</span>, by <span class="variable">${SCRIPT_NAME}</span>"</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"###############################################################"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"include <span class="variable">${CURR_DIR}</span>/Makefile.inc"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### additional the rule for main makefile</span></div><div class="line">function <span class="function"><span class="title">write_main</span></span>()</div><div class="line">{</div><div class="line">	<span class="built_in">echo</span>    <span class="string">"## TODO"</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"BIN = test.elf"</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"BASE_LIBS = <span class="variable">${LIBS_NAME}</span>"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"## add /lib+basename to the end."</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"###e.g m1 --&gt; m1/libm1, m1/sub1 --&gt; m1/sub1/libsub1"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"LIBS = \$(foreach LIB, \$(BASE_LIBS), \$(addsuffix /lib\$(notdir \$(LIB)).a, \$(LIB))) "</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"all: run_test"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"run_test: \$(BIN)"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t@if [ -x \$^ ]; then ./\$^ || exit 0; fi"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\$(BIN): \$(OBJS) "</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"#	@echo  \"\$(LIBS)\""</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t@for dir in \$(BASE_LIBS); do \$(MAKE) -C \$\$dir all || exit 1; done"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t\$(CC) \$(CFLAGS) \$^ -o \$@ \$(LIBS)  "</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t@if [ -x \$@ ]; then ./\$@&gt;/dev/null || exit 2; fi"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"clean:"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t@for dir in \$(BASE_LIBS); do \$(MAKE) -C \$\$dir clean || exit 1; done"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t\$(RM) \$(BIN) \$(OBJS)"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### additional the rule for sub makefile</span></div><div class="line">function <span class="function"><span class="title">write_sub</span></span>()</div><div class="line">{</div><div class="line">	<span class="built_in">echo</span>    <span class="string">"## TODO"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"all: \$(LIB)"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\$(LIB): \$(OBJS)"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t\$(AR) \$(ARFLAGS) \$@ \$(OBJS)"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">	<span class="built_in">echo</span>    <span class="string">"clean:"</span></div><div class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\t\$(RM) \$(OBJS) \$(LIB)"</span></div><div class="line">	<span class="built_in">echo</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### generate the Makefile</span></div><div class="line">function <span class="function"><span class="title">generate_makefile</span></span>()</div><div class="line">{</div><div class="line">	PARAMTER=<span class="variable">$1</span></div><div class="line">	CURRDATE=`date`</div><div class="line"><span class="comment">#	echo "PARAMTER=${PARAMTER}...CURRDATE=${CURRDATE}..."</span></div><div class="line">	common_prefix <span class="variable">${CURRDATE}</span> &gt; Makefile</div><div class="line">	<span class="keyword">if</span> [ <span class="string">"P<span class="variable">$PARAMTER</span>"</span> = <span class="string">"Pmain"</span> ]; <span class="keyword">then</span></div><div class="line">		write_main &gt;&gt; Makefile</div><div class="line">	<span class="keyword">elif</span> [ <span class="string">"P<span class="variable">$PARAMTER</span>"</span> = <span class="string">"Psub"</span> ]; <span class="keyword">then</span></div><div class="line">		write_sub &gt;&gt; Makefile</div><div class="line">	<span class="keyword">fi</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">### search the current dir && sub dirs, create the Makefiles</span></div><div class="line">function <span class="function"><span class="title">search_dir</span></span>()</div><div class="line">{</div><div class="line">	<span class="keyword">for</span> DIR <span class="keyword">in</span> $(find <span class="variable">${CURR_DIR}</span> -type d)</div><div class="line">    <span class="keyword">do</span></div><div class="line">    	<span class="keyword">if</span> [ <span class="variable">${DIR}</span> == <span class="variable">${CURR_DIR}</span> ]; <span class="keyword">then</span></div><div class="line">    		<span class="keyword">if</span> [ ! <span class="operator">-f</span> <span class="string">"Makefile"</span> ]; <span class="keyword">then</span></div><div class="line">        		generate_makefile main </div><div class="line">        	<span class="keyword">fi</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">        	<span class="built_in">cd</span> <span class="variable">${DIR}</span></div><div class="line">    		<span class="keyword">if</span> [ ! <span class="operator">-f</span> <span class="string">"Makefile"</span> ]; <span class="keyword">then</span></div><div class="line">    			generate_makefile sub </div><div class="line">    		<span class="keyword">fi</span></div><div class="line">        	<span class="built_in">cd</span> ..</div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">################### BEGIN ###################</span></div><div class="line">CURR_DIR=`<span class="built_in">pwd</span>`</div><div class="line">SCRIPT_NAME=<span class="variable">$0</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> == <span class="number">1</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></div><div class="line">		--rm)</div><div class="line">			find ./ -name <span class="string">"Makefile"</span> | xargs rm -fr {};</div><div class="line">		;;</div><div class="line">		--clean)</div><div class="line">			make clean</div><div class="line">		;;</div><div class="line">		-h | --help)</div><div class="line">			usage</div><div class="line">		;;</div><div class="line">	<span class="keyword">esac</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">0</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ ! <span class="operator">-f</span> <span class="string">"Makefile"</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="keyword">for</span> LIB_FILE <span class="keyword">in</span> $(find <span class="variable">${CURR_DIR}</span> -type d)</div><div class="line">	<span class="keyword">do</span></div><div class="line">		<span class="keyword">if</span> [ <span class="variable">${LIB_FILE}</span> != <span class="variable">${CURR_DIR}</span> ]; <span class="keyword">then</span></div><div class="line">			<span class="comment">## get the relative path && add a space</span></div><div class="line">			LIBS_NAME+=<span class="variable">${LIB_FILE##$CURR_DIR/}</span><span class="string">" "</span></div><div class="line">		<span class="keyword">fi</span></div><div class="line">	<span class="keyword">done</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="comment">#echo "libs=${LIBS_NAME}..."</span></div><div class="line"></div><div class="line">search_dir <span class="variable">${CURR_DIR}</span></div><div class="line"></div><div class="line"><span class="comment">## make sure run make on root path</span></div><div class="line"><span class="built_in">cd</span> <span class="variable">${CURR_DIR}</span></div><div class="line"><span class="comment">## build the source files</span></div><div class="line"><span class="keyword">if</span> [ <span class="operator">-f</span> <span class="string">"Makefile"</span> ]; <span class="keyword">then</span></div><div class="line">	make</div><div class="line">	RET=$?</div><div class="line">	<span class="keyword">if</span> [ <span class="variable">$RET</span> != <span class="number">0</span> ]; <span class="keyword">then</span></div><div class="line">		<span class="keyword">if</span> [ <span class="variable">$RET</span> == <span class="number">2</span> ]; <span class="keyword">then</span></div><div class="line">			show_error <span class="string">"Run test.elf error..."</span></div><div class="line">		<span class="keyword">else</span></div><div class="line">			show_error <span class="string">"Make error..."</span></div><div class="line">		<span class="keyword">fi</span></div><div class="line">		<span class="keyword">exit</span> <span class="number">1</span></div><div class="line">	<span class="keyword">fi</span></div><div class="line"><span class="keyword">else</span></div><div class="line">	show_error <span class="string">"Not found the Makefile file in <span class="variable">${CURR_DIR}</span>..."</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="comment">################### END ###################</span></div></pre></td></tr></table></figure>
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/bash/">bash</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/02/14/generate-makefile/" data-title="generate_makefile | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/02/14/linux-safety/"  title="linux_safety">
+ <strong>下一篇：</strong><br/> 
+ <span>linux_safety
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#要求"><span class="toc-number">1.</span> <span class="toc-text">要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Blog/" title="Blog">Blog<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Windows/" title="Windows">Windows<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bash/" title="bash">bash<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Qt/" title="Qt">Qt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/markdown/" title="markdown">markdown<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fq/" title="fq">fq<sup>1</sup></a></li>
+		
+			<li><a href="/tags/gitpages/" title="gitpages">gitpages<sup>1</sup></a></li>
+		
+			<li><a href="/tags/makefile/" title="makefile">makefile<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://blog.sina.com.cn/anger123520" target="_blank" title="记录点滴">伯爵的Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=null&verifier=0151a4fb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 学习总结 思考感悟 知识管理 <br/>
+			Write everything here by myself</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1708541802" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/anger123520" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		<a href="https://www.douban.com/people/79351409" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Earl Lee">Earl Lee</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
