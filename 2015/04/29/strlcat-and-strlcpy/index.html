@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Shell Script实例 | Earl Lee&#39;s Blog --- 编程随笔</title>
+    <title>strlcat and strlcpy | Earl Lee&#39;s Blog --- 编程随笔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Earl Lee">
     
-    <meta name="description" itemprop="description" content="写一个bash脚本（文件名是convert.sh），参数是一个路径">
+    <meta name="description" itemprop="description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
     
     
-    <meta name="description" content="写一个bash脚本（文件名是convert.sh），参数是一个路径">
+    <meta name="description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell Script实例">
-<meta property="og:url" content="http://yoursite.com/2015/01/17/a-shellscript/">
+<meta property="og:title" content="strlcat and strlcpy">
+<meta property="og:url" content="http://yoursite.com/2015/04/29/strlcat-and-strlcpy/">
 <meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
-<meta property="og:description" content="写一个bash脚本（文件名是convert.sh），参数是一个路径">
+<meta property="og:description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shell Script实例">
-<meta name="twitter:description" content="写一个bash脚本（文件名是convert.sh），参数是一个路径">
+<meta name="twitter:title" content="strlcat and strlcpy">
+<meta name="twitter:description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
 
 
     
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/17/a-shellscript/" title="Shell Script实例" itemprop="url">Shell Script实例</a>
+      <a href="/2015/04/29/strlcat-and-strlcpy/" title="strlcat and strlcpy" itemprop="url">strlcat and strlcpy</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-17T06:28:30.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
+    <time datetime="2015-04-29T01:37:16.000Z" itemprop="datePublished"> 发表于 2015-04-29</time>
     
   </p>
 </header>
@@ -97,27 +97,33 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bash_说明"><span class="toc-number">1.</span> <span class="toc-text">bash 说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bash_实例"><span class="toc-number">1.1.</span> <span class="toc-text">bash 实例</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#˵��"><span class="toc-number">1.</span> <span class="toc-text">˵��</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����ʵ��"><span class="toc-number">1.1.</span> <span class="toc-text">����ʵ��</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h2 id="bash_说明">bash 说明</h2>
+		<h2 id="˵��">˵��</h2>
 <ul>
-<li>递归搜索该路径下所有文件（包括子目录中的文件），</li>
-<li>如果某一文件内容中有Broadcom字串，替换成Inspur字串，生成新的文件，添加后缀.new；</li>
-<li>并给出新、旧文件的大小。如果路径不存在或者无访问权限，需给出提示信息。例如：</li>
+<li><a href="http://www.gratisoft.us/todd/papers/strlcpy.html" target="_blank" rel="external">Ӣ��ԭ��</a></li>
+<li>strlcpy() ��strlcat() ���߱�֤���е�Ŀ���ַ�������NUL �ַ���β��ֻҪ�ṩ��size ����Ϊ���㡣</li>
+<li>������������size ������Ϊ����Ŀ���ַ��Ĵ�С��</li>
+<li>Strlcpy() �� strlcat()�����������ǳ��Դ������ַ����ĳ��ȡ����� strlcpy()��˵������Դ�ַ����ĳ��ȣ�</li>
+<li>���� strlcat()��˵������Ŀ���ַ����ĳ��ȣ�����ǰ�ĳ��ȣ�����Դ�ַ����ĳ��ȡ����ڼ����Ƿ������ַ��ضϣ�</li>
+<li>����Աֻ��Ҫ��֤�ط�ֵ�Ƿ���С��size ���������ˣ����㷢���ضϣ��洢�����ַ����������ֽ�������֪����</li>
+<li>����Ա���Է���һ�������Ŀռ䣬�������¿����ַ�����������Ҫ�Ļ���������ֵ����������snprintf() �ķ���ֵ���ƣ�</li>
+<li>snprintf() ��BSD ʵ�ֲ��ɼ������ٵ�C9X ��׼�淶������ע�⣬�ǲ���ǰ���е�snprintf ʵ�ֶ���ѭC9X ����</li>
+<li>����û�з����ضϣ�����Ա����Ҳ��֪�˽����ַ����ĳ��ȡ�����ͨ����ʵ����ʹ��strncpy() ��strncat() �������ַ�����</li>
+<li>Ȼ��ʹ��strlen() �����ý����ַ����ĳ��ȣ����ˣ�strlcpy() ��strlcat() ����һ����ֵ�����ǳ����á�</li>
+<li>����strlcpy() ��strlcat() �󣬾Ͳ�����Ҫ����һ����strlen() �������ַ����ĳ����ˡ�</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ convert.sh Q3</div></pre></td></tr></table></figure>
+<h3 id="����ʵ��">����ʵ��</h3>
+<p>the function of strlcat</p>
 
-<blockquote>
-<p>Q3/sub1/sub12/file1 (1238 bytes) -&gt; Q3/sub1/sub12/file1.new (1236 bytes)<br>Q3/sub2/main.c (1238 bytes)      -&gt; Q3/sub2/main.c.new (1236 bytes) </p>
-</blockquote>
-<h3 id="bash_实例">bash 实例</h3>
-<p>Here is an example of Shell Script:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * '_cups_strlcat()' - Safely concatenate two strings.</div><div class="line"> */</div><div class="line"></div><div class="line">size_t					<span class="comment">/* O - Length of string */</span></div><div class="line">strlcat(<span class="keyword">char</span>       *dst,		<span class="comment">/* O - Destination string */</span></div><div class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *src,		<span class="comment">/* I - Source string */</span></div><div class="line">	      size_t     size)		<span class="comment">/* I - Size of destination string buffer */</span></div><div class="line">{</div><div class="line">  size_t	srclen;			<span class="comment">/* Length of source string */</span></div><div class="line">  size_t	dstlen;			<span class="comment">/* Length of destination string */</span></div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is left...</div><div class="line">  */</div><div class="line"></div><div class="line">  dstlen = <span class="built_in">strlen</span>(dst);</div><div class="line">  size   -= dstlen + <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!size)</div><div class="line">    <span class="keyword">return</span> (dstlen);		<span class="comment">/* No room, return immediately... */</span></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is needed...</div><div class="line">  */</div><div class="line"></div><div class="line">  srclen = <span class="built_in">strlen</span>(src);</div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Copy the appropriate amount...</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (srclen &gt; size)</div><div class="line">    srclen = size;</div><div class="line"></div><div class="line">  <span class="built_in">memcpy</span>(dst + dstlen, src, srclen);</div><div class="line">  dst[dstlen + srclen] = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (dstlen + srclen);</div><div class="line">}</div></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="shebang">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="function"><span class="title">FindFile</span></span>()</div><div class="line">{</div><div class="line">	CURDIR=<span class="variable">$1</span></div><div class="line">	<span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">${CURDIR}</span>/*; <span class="keyword">do</span></div><div class="line">		<span class="keyword">if</span> [ <span class="operator">-f</span> <span class="variable">${file}</span> ]; <span class="keyword">then</span></div><div class="line">			<span class="keyword">if</span> [ -r <span class="variable">${file}</span> ]; <span class="keyword">then</span></div><div class="line">				needfile=`grep <span class="string">"Broadcom"</span> <span class="variable">${file}</span> <span class="operator">-l</span>`</div><div class="line">				<span class="keyword">if</span> [ <span class="variable">${needfile}</span> ]; <span class="keyword">then</span></div><div class="line">					cat <span class="variable">$file</span> | sed <span class="string">'s#Broadcom#Inspur#g'</span> &gt; <span class="variable">${file}</span>.new</div><div class="line">					ORI_FILE_SIZE=`wc -c <span class="variable">${file}</span> | awk <span class="string">'{print $1}'</span>`</div><div class="line">					NEW_FILE_SIZE=`wc -c <span class="variable">${file}</span>.new | awk <span class="string">'{print $1}'</span>`</div><div class="line">					<span class="built_in">echo</span> <span class="string">"<span class="variable">${file}</span> ( <span class="variable">${ORI_FILE_SIZE}</span> bytes) -&gt; <span class="variable">${file}</span>.new ( <span class="variable">${NEW_FILE_SIZE}</span> bytes)"</span></div><div class="line">				<span class="keyword">fi</span></div><div class="line">			<span class="keyword">else</span></div><div class="line">				<span class="built_in">echo</span> <span class="string">"<span class="variable">${file}</span> no access permissions..."</span></div><div class="line">			<span class="keyword">fi</span></div><div class="line">		<span class="keyword">else</span></div><div class="line">			FindFile <span class="variable">${file}</span></div><div class="line">		<span class="keyword">fi</span></div><div class="line">	<span class="keyword">done</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> != <span class="number">1</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"Please input the path for search..."</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"e.g: ./convert.sh /home/test "</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">SEARCH_PATH=<span class="variable">$1</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ ! <span class="operator">-d</span> <span class="variable">${SEARCH_PATH}</span> ]; <span class="keyword">then</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"<span class="variable">${SEARCH_PATH}</span> is not exist..."</span></div><div class="line">	<span class="keyword">exit</span> <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">FindFile <span class="variable">${SEARCH_PATH}</span></div></pre></td></tr></table></figure>
+<p>the function of strlcpy</p>
 
-<p>经调试,完成功能<br>*</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * '_cups_strlcpy()' - Safely copy two strings.</div><div class="line"> */</div><div class="line"></div><div class="line">size_t					<span class="comment">/* O - Length of string */</span></div><div class="line">strlcpy(<span class="keyword">char</span>       *dst,		<span class="comment">/* O - Destination string */</span></div><div class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *src,		<span class="comment">/* I - Source string */</span></div><div class="line">	      size_t      size)		<span class="comment">/* I - Size of destination string buffer */</span></div><div class="line">{</div><div class="line">  size_t	srclen;			<span class="comment">/* Length of source string */</span></div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is needed...</div><div class="line">  */</div><div class="line"></div><div class="line">  size --;</div><div class="line"></div><div class="line">  srclen = <span class="built_in">strlen</span>(src);</div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Copy the appropriate amount...</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (srclen &gt; size)</div><div class="line">    srclen = size;</div><div class="line"></div><div class="line">  <span class="built_in">memcpy</span>(dst, src, srclen);</div><div class="line">  dst[srclen] = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (srclen);</div><div class="line">}</div></pre></td></tr></table></figure>
+
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -131,7 +137,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/bash/">bash</a>
+  <span></span> <a href="/tags/C-Language/">C Language</a>
   </div>
 
 </div>
@@ -140,7 +146,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/01/17/a-shellscript/" data-title="Shell Script实例 | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/04/29/strlcat-and-strlcpy/" data-title="strlcat and strlcpy | Earl Lee&#39;s Blog --- 编程随笔" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -153,19 +159,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/17/a-c-test/" title="Hello Git Pages">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Hello Git Pages</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/17/a-makefile/"  title="Makefile实例">
+<a href="/2015/02/14/generate-makefile/"  title="generate_makefile">
  <strong>下一篇：</strong><br/> 
- <span>Makefile实例
+ <span>generate_makefile
 </span>
 </a>
 </div>
@@ -180,7 +178,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bash_说明"><span class="toc-number">1.</span> <span class="toc-text">bash 说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bash_实例"><span class="toc-number">1.1.</span> <span class="toc-text">bash 实例</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#˵��"><span class="toc-number">1.</span> <span class="toc-text">˵��</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����ʵ��"><span class="toc-number">1.1.</span> <span class="toc-text">����ʵ��</span></a></li></ol></li></ol>
  
   </div>
 

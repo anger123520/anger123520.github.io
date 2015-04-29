@@ -83,6 +83,88 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/04/29/strlcat-and-strlcpy/" title="strlcat and strlcpy" itemprop="url">strlcat and strlcpy</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-29T01:37:16.000Z" itemprop="datePublished"> 发表于 2015-04-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="˵��">˵��</h2>
+<ul>
+<li><a href="http://www.gratisoft.us/todd/papers/strlcpy.html" target="_blank" rel="external">Ӣ��ԭ��</a></li>
+<li>strlcpy() ��strlcat() ���߱�֤���е�Ŀ���ַ�������NUL �ַ���β��ֻҪ�ṩ��size ����Ϊ���㡣</li>
+<li>������������size ������Ϊ����Ŀ���ַ��Ĵ�С��</li>
+<li>Strlcpy() �� strlcat()�����������ǳ��Դ������ַ����ĳ��ȡ����� strlcpy()��˵������Դ�ַ����ĳ��ȣ�</li>
+<li>���� strlcat()��˵������Ŀ���ַ����ĳ��ȣ�����ǰ�ĳ��ȣ�����Դ�ַ����ĳ��ȡ����ڼ����Ƿ������ַ��ضϣ�</li>
+<li>����Աֻ��Ҫ��֤�ط�ֵ�Ƿ���С��size ���������ˣ����㷢���ضϣ��洢�����ַ����������ֽ�������֪����</li>
+<li>����Ա���Է���һ�������Ŀռ䣬�������¿����ַ�����������Ҫ�Ļ���������ֵ����������snprintf() �ķ���ֵ���ƣ�</li>
+<li>snprintf() ��BSD ʵ�ֲ��ɼ������ٵ�C9X ��׼�淶������ע�⣬�ǲ���ǰ���е�snprintf ʵ�ֶ���ѭC9X ����</li>
+<li>����û�з����ضϣ�����Ա����Ҳ��֪�˽����ַ����ĳ��ȡ�����ͨ����ʵ����ʹ��strncpy() ��strncat() �������ַ�����</li>
+<li>Ȼ��ʹ��strlen() �����ý����ַ����ĳ��ȣ����ˣ�strlcpy() ��strlcat() ����һ����ֵ�����ǳ����á�</li>
+<li>����strlcpy() ��strlcat() �󣬾Ͳ�����Ҫ����һ����strlen() �������ַ����ĳ����ˡ�</li>
+</ul>
+<h3 id="����ʵ��">����ʵ��</h3>
+<p>the function of strlcat</p>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * '_cups_strlcat()' - Safely concatenate two strings.</div><div class="line"> */</div><div class="line"></div><div class="line">size_t					<span class="comment">/* O - Length of string */</span></div><div class="line">strlcat(<span class="keyword">char</span>       *dst,		<span class="comment">/* O - Destination string */</span></div><div class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *src,		<span class="comment">/* I - Source string */</span></div><div class="line">	      size_t     size)		<span class="comment">/* I - Size of destination string buffer */</span></div><div class="line">{</div><div class="line">  size_t	srclen;			<span class="comment">/* Length of source string */</span></div><div class="line">  size_t	dstlen;			<span class="comment">/* Length of destination string */</span></div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is left...</div><div class="line">  */</div><div class="line"></div><div class="line">  dstlen = <span class="built_in">strlen</span>(dst);</div><div class="line">  size   -= dstlen + <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!size)</div><div class="line">    <span class="keyword">return</span> (dstlen);		<span class="comment">/* No room, return immediately... */</span></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is needed...</div><div class="line">  */</div><div class="line"></div><div class="line">  srclen = <span class="built_in">strlen</span>(src);</div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Copy the appropriate amount...</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (srclen &gt; size)</div><div class="line">    srclen = size;</div><div class="line"></div><div class="line">  <span class="built_in">memcpy</span>(dst + dstlen, src, srclen);</div><div class="line">  dst[dstlen + srclen] = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (dstlen + srclen);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>the function of strlcpy</p>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * '_cups_strlcpy()' - Safely copy two strings.</div><div class="line"> */</div><div class="line"></div><div class="line">size_t					<span class="comment">/* O - Length of string */</span></div><div class="line">strlcpy(<span class="keyword">char</span>       *dst,		<span class="comment">/* O - Destination string */</span></div><div class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *src,		<span class="comment">/* I - Source string */</span></div><div class="line">	      size_t      size)		<span class="comment">/* I - Size of destination string buffer */</span></div><div class="line">{</div><div class="line">  size_t	srclen;			<span class="comment">/* Length of source string */</span></div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is needed...</div><div class="line">  */</div><div class="line"></div><div class="line">  size --;</div><div class="line"></div><div class="line">  srclen = <span class="built_in">strlen</span>(src);</div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Copy the appropriate amount...</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (srclen &gt; size)</div><div class="line">    srclen = size;</div><div class="line"></div><div class="line">  <span class="built_in">memcpy</span>(dst, src, srclen);</div><div class="line">  dst[srclen] = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (srclen);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C-Language/">C Language</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/02/14/generate-makefile/" title="generate_makefile" itemprop="url">generate_makefile</a>
   </h1>
   <p class="article-author">By
@@ -986,73 +1068,10 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/17/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Earl Lee" target="_blank" itemprop="author">Earl Lee</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-17T05:48:37.000Z" itemprop="datePublished"> 发表于 2015-01-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  </nav>
 
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -1068,7 +1087,7 @@
 		
 			<li><a href="/categories/Blog/" title="Blog">Blog<sup>2</sup></a></li>
 		
-			<li><a href="/categories/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
 			<li><a href="/categories/Windows/" title="Windows">Windows<sup>1</sup></a></li>
 		
@@ -1081,7 +1100,7 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>2</sup></a></li>
+			<li><a href="/tags/C-Language/" title="C Language">C Language<sup>3</sup></a></li>
 		
 			<li><a href="/tags/bash/" title="bash">bash<sup>2</sup></a></li>
 		
