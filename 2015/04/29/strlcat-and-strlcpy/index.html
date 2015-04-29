@@ -9,18 +9,18 @@
     
     <meta name="author" content="Earl Lee">
     
-    <meta name="description" itemprop="description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
+    <meta name="description" itemprop="description" content="线程安全的字符追加和字符拷贝">
     
     
-    <meta name="description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
+    <meta name="description" content="线程安全的字符追加和字符拷贝">
 <meta property="og:type" content="article">
 <meta property="og:title" content="strlcat and strlcpy">
 <meta property="og:url" content="http://yoursite.com/2015/04/29/strlcat-and-strlcpy/">
 <meta property="og:site_name" content="Earl Lee's Blog --- 编程随笔">
-<meta property="og:description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
+<meta property="og:description" content="线程安全的字符追加和字符拷贝">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="strlcat and strlcpy">
-<meta name="twitter:description" content="�̰߳�ȫ���ַ�׷�Ӻ��ַ�����">
+<meta name="twitter:description" content="线程安全的字符追加和字符拷贝">
 
 
     
@@ -97,25 +97,25 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#˵��"><span class="toc-number">1.</span> <span class="toc-text">˵��</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����ʵ��"><span class="toc-number">1.1.</span> <span class="toc-text">����ʵ��</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">1.1.</span> <span class="toc-text">代码实现</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h2 id="˵��">˵��</h2>
+		<h2 id="说明">说明</h2>
 <ul>
-<li><a href="http://www.gratisoft.us/todd/papers/strlcpy.html" target="_blank" rel="external">Ӣ��ԭ��</a></li>
-<li>strlcpy() ��strlcat() ���߱�֤���е�Ŀ���ַ�������NUL �ַ���β��ֻҪ�ṩ��size ����Ϊ���㡣</li>
-<li>������������size ������Ϊ����Ŀ���ַ��Ĵ�С��</li>
-<li>Strlcpy() �� strlcat()�����������ǳ��Դ������ַ����ĳ��ȡ����� strlcpy()��˵������Դ�ַ����ĳ��ȣ�</li>
-<li>���� strlcat()��˵������Ŀ���ַ����ĳ��ȣ�����ǰ�ĳ��ȣ�����Դ�ַ����ĳ��ȡ����ڼ����Ƿ������ַ��ضϣ�</li>
-<li>����Աֻ��Ҫ��֤�ط�ֵ�Ƿ���С��size ���������ˣ����㷢���ضϣ��洢�����ַ����������ֽ�������֪����</li>
-<li>����Ա���Է���һ�������Ŀռ䣬�������¿����ַ�����������Ҫ�Ļ���������ֵ����������snprintf() �ķ���ֵ���ƣ�</li>
-<li>snprintf() ��BSD ʵ�ֲ��ɼ������ٵ�C9X ��׼�淶������ע�⣬�ǲ���ǰ���е�snprintf ʵ�ֶ���ѭC9X ����</li>
-<li>����û�з����ضϣ�����Ա����Ҳ��֪�˽����ַ����ĳ��ȡ�����ͨ����ʵ����ʹ��strncpy() ��strncat() �������ַ�����</li>
-<li>Ȼ��ʹ��strlen() �����ý����ַ����ĳ��ȣ����ˣ�strlcpy() ��strlcat() ����һ����ֵ�����ǳ����á�</li>
-<li>����strlcpy() ��strlcat() �󣬾Ͳ�����Ҫ����һ����strlen() �������ַ����ĳ����ˡ�</li>
+<li><a href="http://www.gratisoft.us/todd/papers/strlcpy.html" target="_blank" rel="external">英文原文</a></li>
+<li>strlcpy() 和strlcat() 两者保证所有的目标字符串都以NUL 字符结尾，只要提供的size 参数为非零。</li>
+<li>两个函数都把size 参数作为整个目标字符的大小。</li>
+<li>Strlcpy() 和 strlcat()函数返回他们尝试创建的字符串的长度。对于 strlcpy()来说，就是源字符串的长度；</li>
+<li>而对 strlcat()来说，就是目标字符串的长度（串接前的长度）加上源字符串的长度。对于检查是否发生字符截断，</li>
+<li>程序员只需要验证回返值是否不小于size 参数。因此，就算发生截断，存储整个字符串所需的字节数现已知道，</li>
+<li>程序员可以分配一个更大的空间，接着重新拷贝字符串（如果需要的话）。返回值在语义上与snprintf() 的返回值类似，</li>
+<li>snprintf() 由BSD 实现并由即将来临的C9X 标准规范化（请注意，非并当前所有的snprintf 实现都遵循C9X ）。</li>
+<li>如果没有发生截断，程序员现在也获知了结果字符串的长度。由于通常的实践是使用strncpy() 和strncat() 来构建字符串，</li>
+<li>然后使用strlen() 来获得结果字符串的长度，因此（strlcpy() 和strlcat() ）这一返回值语义非常有用。</li>
+<li>有了strlcpy() 和strlcat() 后，就不再需要最后一步的strlen() 来获得字符串的长度了。</li>
 </ul>
-<h3 id="����ʵ��">����ʵ��</h3>
+<h3 id="代码实现">代码实现</h3>
 <p>the function of strlcat</p>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * '_cups_strlcat()' - Safely concatenate two strings.</div><div class="line"> */</div><div class="line"></div><div class="line">size_t					<span class="comment">/* O - Length of string */</span></div><div class="line">strlcat(<span class="keyword">char</span>       *dst,		<span class="comment">/* O - Destination string */</span></div><div class="line">              <span class="keyword">const</span> <span class="keyword">char</span> *src,		<span class="comment">/* I - Source string */</span></div><div class="line">	      size_t     size)		<span class="comment">/* I - Size of destination string buffer */</span></div><div class="line">{</div><div class="line">  size_t	srclen;			<span class="comment">/* Length of source string */</span></div><div class="line">  size_t	dstlen;			<span class="comment">/* Length of destination string */</span></div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is left...</div><div class="line">  */</div><div class="line"></div><div class="line">  dstlen = <span class="built_in">strlen</span>(dst);</div><div class="line">  size   -= dstlen + <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!size)</div><div class="line">    <span class="keyword">return</span> (dstlen);		<span class="comment">/* No room, return immediately... */</span></div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Figure out how much room is needed...</div><div class="line">  */</div><div class="line"></div><div class="line">  srclen = <span class="built_in">strlen</span>(src);</div><div class="line"></div><div class="line"> <span class="comment">/*</span></div><div class="line">  * Copy the appropriate amount...</div><div class="line">  */</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (srclen &gt; size)</div><div class="line">    srclen = size;</div><div class="line"></div><div class="line">  <span class="built_in">memcpy</span>(dst + dstlen, src, srclen);</div><div class="line">  dst[dstlen + srclen] = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> (dstlen + srclen);</div><div class="line">}</div></pre></td></tr></table></figure>
@@ -178,7 +178,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#˵��"><span class="toc-number">1.</span> <span class="toc-text">˵��</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����ʵ��"><span class="toc-number">1.1.</span> <span class="toc-text">����ʵ��</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">1.1.</span> <span class="toc-text">代码实现</span></a></li></ol></li></ol>
  
   </div>
 
